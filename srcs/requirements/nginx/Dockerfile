@@ -6,7 +6,7 @@
 #    By: gasouza <gasouza@student.42sp.org.br >     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/21 10:06:55 by gasouza           #+#    #+#              #
-#    Updated: 2024/04/21 14:44:01 by gasouza          ###   ########.fr        #
+#    Updated: 2024/04/21 15:56:18 by gasouza          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,16 @@ RUN apt -y install nginx openssl
 
 
 # Copy customized files
-COPY ./conf/* ./etc/nginx/conf.d/
-# COPY ./tools/ ./etc/nginx/tools
+COPY ./conf/nginx.conf /etc/nginx/conf.d/
 
-EXPOSE 80
+RUN mkdir -p /etc/security/certs/
+COPY ./tools/entry.sh .
+
+EXPOSE 443
+
+ENTRYPOINT ["bash", "./entry.sh" ];
 
 CMD ["nginx", "-g", "daemon off;"]
+
+# CMD ["/etc/security/install-cert.sh && nginx -g daemon off"]
+# CMD ["nginx", "-g", "daemon off;"]

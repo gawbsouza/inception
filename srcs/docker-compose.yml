@@ -14,13 +14,14 @@ services:
     container_name: nginx
     build: requirements/nginx
     ports:
-      - "80:80"
+      - "443:443"
     networks:
       - inception
     volumes:
       - wordpress:/app
     depends_on:
       - wordpress
+      - mariadb
     restart: always
 
   wordpress:
@@ -30,4 +31,16 @@ services:
       - inception
     volumes:
       - wordpress:/app
+    depends_on:
+      - mariadb
     restart: always
+
+  mariadb:
+    container_name: mariadb
+    image: mysql
+    restart: always
+    environment:
+        MYSQL_ROOT_PASSWORD: db-root-pass
+        MYSQL_USER: db-user
+        MYSQL_PASSWORD: db-pass
+        MYSQL_DATABASE: db-wp
