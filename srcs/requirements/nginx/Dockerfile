@@ -3,22 +3,24 @@
 #                                                         :::      ::::::::    #
 #    Dockerfile                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gasouza <gasouza@student.42sp.org.br>      +#+  +:+       +#+         #
+#    By: gasouza <gasouza@student.42sp.org.br >     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/21 10:06:55 by gasouza           #+#    #+#              #
-#    Updated: 2024/04/21 10:44:05 by gasouza          ###   ########.fr        #
+#    Updated: 2024/04/21 14:44:01 by gasouza          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM debian:oldstable
 
-RUN apt-get update && \ 
-	apt-get install nginx openssl -y
+# Install dependences
+RUN apt update
+RUN apt -y install nginx openssl
 
-EXPOSE 80
 
+# Copy customized files
 COPY ./conf/* ./etc/nginx/conf.d/
 # COPY ./tools/ ./etc/nginx/tools
 
+EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]

@@ -1,22 +1,33 @@
-# name: inception
+name: gasouza-inception
 
 networks:
   inception:
     driver: bridge
 
+volumes:
+  wordpress:
+    name: wordpress
+    external: false  # criar volume externo
+
 services:
   nginx:
     container_name: nginx
     build: requirements/nginx
-    depends_on:
-      - wordpress
     ports:
       - "80:80"
     networks:
       - inception
+    volumes:
+      - wordpress:/app
+    depends_on:
+      - wordpress
+    restart: always
 
   wordpress:
     container_name: wordpress
     build: requirements/wordpress
     networks:
       - inception
+    volumes:
+      - wordpress:/app
+    restart: always
