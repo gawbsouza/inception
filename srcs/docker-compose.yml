@@ -1,12 +1,15 @@
 name: gasouza-inception
 
 networks:
-  inception:
+  app-network:
     driver: bridge
 
 volumes:
-  wordpress:
-    name: wordpress
+  app-files:
+    name: app-files
+    external: false  # criar volume externo
+  db-files:
+    name: db-files
     external: false  # criar volume externo
 
 services:
@@ -16,31 +19,34 @@ services:
     ports:
       - "443:443"
     networks:
-      - inception
+      - app-network
     volumes:
-      - wordpress:/app
+      - app-files:/app
     depends_on:
       - wordpress
       - mariadb
     restart: always
 
   wordpress:
+    stdin_open: true # docker run -i
+    tty: true  
     container_name: wordpress
     build: requirements/wordpress
     networks:
-      - inception
+      - app-network
     volumes:
-      - wordpress:/app
+      - app-files:/app
     depends_on:
       - mariadb
     restart: always
 
   mariadb:
+    stdin_open: true # docker run -i
+    tty: true  
     container_name: mariadb
-    image: mysql
+    build: requirements/mariadb
+    networks:
+      - app-network
+    volumes:
+      - db-files:/var/lib/mysql
     restart: always
-    environment:
-        MYSQL_ROOT_PASSWORD: db-root-pass
-        MYSQL_USER: db-user
-        MYSQL_PASSWORD: db-pass
-        MYSQL_DATABASE: db-wp

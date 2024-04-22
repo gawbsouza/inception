@@ -6,7 +6,7 @@
 #    By: gasouza <gasouza@student.42sp.org.br >     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/21 10:14:16 by gasouza           #+#    #+#              #
-#    Updated: 2024/04/21 16:49:27 by gasouza          ###   ########.fr        #
+#    Updated: 2024/04/22 06:28:03 by gasouza          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,6 @@ RUN mkdir /app
 # Copy customized files
 COPY ./conf/* /etc/php/7.4/fpm/pool.d/
 COPY ./tools/* /app
-
-WORKDIR /app
 
 # Install WP-CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
@@ -53,4 +51,10 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 
 EXPOSE 9000
 
+COPY ./tools/entry.sh /entry.sh
+
+WORKDIR /app
+ENTRYPOINT ["bash", "/entry.sh" ];
+
 CMD ["/usr/sbin/php-fpm7.4", "-F"]
+# CMD [ "bash" ]
