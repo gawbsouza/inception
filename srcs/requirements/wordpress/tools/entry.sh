@@ -1,17 +1,5 @@
 #!/bin/bash
 
-SITE_HOST="localhost"
-SITE_NAME="Gasouza's Blog"
-SITE_ADMIN_USER="gasouza"
-SITE_ADMIN_PASS="pass"
-SITE_ADMIN_MAIL="gasouza@42sp.org"
-
-DB_HOST="mariadb"
-DB_NAME="db_wp"
-DB_USER="db_user"
-DB_PASS="db_pass"
-
-# verificar diretamente se o arquivo de config já existe
 if ! wp core is-installed --allow-root 2> /dev/null; then
 
     sleep 10
@@ -20,14 +8,29 @@ if ! wp core is-installed --allow-root 2> /dev/null; then
     echo "*** START WORDPRESS INSTALATION ***"
     echo
 
-    wp core download --path=/app --allow-root
-    wp config create --dbhost="${DB_HOST}" --dbname="${DB_NAME}" --dbuser="${DB_USER}" --dbpass="${DB_PASS}" --allow-root
-    wp core install --url="${SITE_HOST}}" --title="${SITE_NAME}" --admin_user="${SITE_ADMIN_USER}" --admin_password="${SITE_ADMIN_PASS}" --admin_email="${SITE_ADMIN_MAIL}" --allow-root
+    wp core download --allow-root
+
+    wp config create --allow-root \
+        --dbhost="mariadb" \
+        --dbname="${WORDPRESS_DB_NAME}" \
+        --dbuser="${WORDPRESS_DB_USER}" \
+        --dbpass="${WORDPRESS_DB_PASS}" 
+
+    wp core install --allow-root \
+        --url="$WORDPRESS_SITE_HOST" \
+        --title="$WORDPRESS_SITE_NAME" \
+        --admin_user="$WORDPRESS_ADMIN_USER" \
+        --admin_password="$WORDPRESS_ADMIN_PASS" \
+        --admin_email="$WORDPRESS_ADMIN_MAIL"
 
     echo
     echo "*** END WORDPRESS INSTALATION ***"
     echo
 
 fi
+
+echo
+echo "Wordpress Blog Running!"
+echo
 
 exec "$@"
