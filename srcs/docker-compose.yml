@@ -1,4 +1,4 @@
-name: gasouza-inception
+name: gasouza_inception
 
 networks:
   app-network:
@@ -33,14 +33,17 @@ services:
     env_file:
       - .env
     environment:
-      - WORDPRESS_SITE_HOST
-      - WORDPRESS_SITE_NAME
-      - WORDPRESS_ADMIN_USER
-      - WORDPRESS_ADMIN_PASS
-      - WORDPRESS_ADMIN_MAIL
-      - WORDPRESS_DB_NAME
-      - WORDPRESS_DB_USER
-      - WORDPRESS_DB_PASS
+      - WP_SITE_HOST
+      - WP_SITE_NAME
+      - WP_ADMIN_USER
+      - WP_ADMIN_PASS
+      - WP_ADMIN_MAIL
+      - WP_EDITOR_USER
+      - WP_EDITOR_PASS
+      - WP_EDITOR_MAIL
+      - DATABASE_NAME
+      - DATABASE_USER
+      - DATABASE_PASS
     networks:
       - app-network
     volumes:
@@ -50,10 +53,15 @@ services:
     restart: always
 
   mariadb:
-    stdin_open: true # docker run -i
-    tty: true  
     container_name: mariadb
     build: requirements/mariadb
+    env_file:
+      - .env
+    environment:
+      - DATABASE_NAME
+      - DATABASE_USER
+      - DATABASE_PASS
+      - DATABASE_ROOT_PASS
     networks:
       - app-network
     volumes:
