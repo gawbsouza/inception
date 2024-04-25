@@ -7,7 +7,7 @@ CERT_SUB="/C=BR/ST=Sao Paulo/L=Sao Paulo/O=42SP/OU=Inception/CN=Gabriel Souza/"
 
 if ! [ -e /etc/security/certs/cert.crt ]; then
 
-    sleep 10
+    sleep 25
 
     echo
     echo "*** START CERTIFICATE CREATION ***"

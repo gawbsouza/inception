@@ -2,6 +2,8 @@
 
 if ! wp core is-installed --allow-root 2> /dev/null; then
 
+    sleep 10
+
     echo
     echo "*** START WORDPRESS INSTALATION ***"
     echo
