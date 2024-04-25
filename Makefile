@@ -1,21 +1,40 @@
 
-COMPOSE_FILE=./srcs/docker-compose.yml
 
-all: config_host
+USER_BASE		= gasouza
+DOMAIN_BASE		= $(USER_BASE).42.fr
+
+VOLUMES_PATH	= /home/$(USER_BASE)/data
+
+APP_VOLUME_NAME = app-files
+DB_VOLUME_NAME	= db-files
+
+APP_VOLUME_PATH	= $(VOLUMES_PATH)/$(APP_VOLUME_NAME)
+DB_VOLUME_PATH	= $(VOLUMES_PATH)/$(DB_VOLUME_NAME)
+
+COMPOSE_FILE	= ./srcs/docker-compose.yml
+
+all: config_host create_volumes up
 
 config_host:
-	@if ! grep "gasouza.42.fr" /etc/hosts > /dev/null; then \
-		sudo sed -i '$$a 127.0.0.1\tgasouza.42.fr' /etc/hosts;\
+	@if ! grep "$(DOMAIN_BASE)" /etc/hosts > /dev/null; then \
+		sudo sed -i '$$a 127.0.0.1\t$(DOMAIN_BASE)' /etc/hosts;\
 	fi
 
+create_volumes:
+	@sudo mkdir -p $(APP_VOLUME_PATH)
+	@sudo mkdir -p $(DB_VOLUME_PATH)
+	@sudo docker volume create --opt type=none --opt device=$(APP_VOLUME_PATH) --opt o=bind $(APP_VOLUME_NAME)
+	@sudo docker volume create --opt type=none --opt device=$(DB_VOLUME_PATH) --opt o=bind $(DB_VOLUME_NAME)
 
 up: config_host
 	@docker compose -f $(COMPOSE_FILE) up --build
 
-down:
+clean:
 	@docker compose -f $(COMPOSE_FILE) down
 
-clean:
-	@docker volume rm app-files db-files
+fclean: clean
+	@docker volume rm $(APP_VOLUME_NAME) $(DB_VOLUME_NAME)
+	@sudo rm -rf $(APP_VOLUME_PATH)
+	@sudo rm -rf $(DB_VOLUME_PATH)
 
-re: down clean up
+re: fclean all

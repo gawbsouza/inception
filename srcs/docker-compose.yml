@@ -7,10 +7,10 @@ networks:
 volumes:
   app-files:
     name: app-files
-    external: false  # criar volume externo
+    external: true
   db-files:
     name: db-files
-    external: false  # criar volume externo
+    external: true
 
 services:
   nginx:
