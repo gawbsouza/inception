@@ -3,23 +3,23 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gasouza <gasouza@student.42sp.org.br>      +#+  +:+       +#+         #
+#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 19:35:30 by gasouza           #+#    #+#              #
-#    Updated: 2024/04/26 19:53:35 by gasouza          ###   ########.fr        #
+#    Updated: 2024/04/26 22:09:31 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 USER_BASE		= gasouza
 DOMAIN_BASE		= $(USER_BASE).42.fr
 
-VOLUMES_PATH	= /home/$(USER_BASE)/data
+VOLUMES_PATH	= /home/$(USER_BASE)
 
 APP_VOLUME_NAME = app-files
 DB_VOLUME_NAME	= db-files
 
-APP_VOLUME_PATH	= $(VOLUMES_PATH)/$(APP_VOLUME_NAME)
-DB_VOLUME_PATH	= $(VOLUMES_PATH)/$(DB_VOLUME_NAME)
+APP_VOLUME_PATH	= $(VOLUMES_PATH)/data/$(APP_VOLUME_NAME)
+DB_VOLUME_PATH	= $(VOLUMES_PATH)/data/$(DB_VOLUME_NAME)
 
 COMPOSE_FILE	= ./srcs/docker-compose.yml
 
@@ -46,8 +46,7 @@ remove_docker_volumes:
 	@docker volume rm $(APP_VOLUME_NAME) $(DB_VOLUME_NAME)
 
 remove_local_volumes:
-	@sudo rm -rf $(APP_VOLUME_PATH)
-	@sudo rm -rf $(DB_VOLUME_PATH)
+	@sudo rm -rf $(VOLUMES_PATH)
 
 clean: down
 
