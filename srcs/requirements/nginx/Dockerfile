@@ -6,7 +6,7 @@
 #    By: gasouza <gasouza@student.42sp.org.br>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/21 10:06:55 by gasouza           #+#    #+#              #
-#    Updated: 2024/04/26 21:15:17 by gasouza          ###   ########.fr        #
+#    Updated: 2024/04/27 21:40:08 by gasouza          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,6 @@ RUN mkdir -p /app/security/certs
 
 EXPOSE 443
 
-ENTRYPOINT ["bash", "./entry.sh" ];
+ENTRYPOINT ["bash", "./entry.sh" ]
 
 CMD ["nginx", "-g", "daemon off;"]
