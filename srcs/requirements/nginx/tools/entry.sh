@@ -1,13 +1,13 @@
 #!/bin/bash
 
-CERT_PATH="/etc/security/certs"
+CERT_PATH="/app/security/certs"
 CERT_FILE="${CERT_PATH}/cert.crt"
 CERT_KEY="${CERT_PATH}/cert.key"
 CERT_SUB="/C=BR/ST=Sao Paulo/L=Sao Paulo/O=42 Sao Paulo/OU=Inception/CN=Gabriel Souza/"
 
-if ! [ -e /etc/security/certs/cert.crt ]; then
+if ! [ -e $CERT_FILE ]; then
 
-    sleep 5
+    sleep 8
 
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
         -out "$CERT_FILE" \

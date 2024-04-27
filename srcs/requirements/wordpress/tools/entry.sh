@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ! wp core is-installed --path=/app --allow-root 2> /dev/null; then
+if ! [ -e "/app/index.php" ]; then
 
     sleep 10
 
