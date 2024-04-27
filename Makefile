@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
+#    By: gasouza <gasouza@student.42sp.org.br >     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 19:35:30 by gasouza           #+#    #+#              #
-#    Updated: 2024/04/26 22:09:31 by user42           ###   ########.fr        #
+#    Updated: 2024/04/27 11:17:56 by gasouza          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-USER_BASE		= gasouza
-DOMAIN_BASE		= $(USER_BASE).42.fr
+USER_NAME		= gasouza
+DOMAIN_NAME		= $(USER_NAME).42.fr
 
-VOLUMES_PATH	= /home/$(USER_BASE)
+VOLUMES_PATH	= /home/$(USER_NAME)
 
 APP_VOLUME_NAME = app-files
 DB_VOLUME_NAME	= db-files
@@ -32,8 +32,8 @@ down:
 	@docker compose -f $(COMPOSE_FILE) down
 
 config_host:
-	@if ! grep "$(DOMAIN_BASE)" /etc/hosts > /dev/null; then \
-		sudo sed -i '$$a 127.0.0.1\t$(DOMAIN_BASE)' /etc/hosts;\
+	@if ! grep "$(DOMAIN_NAME)" /etc/hosts > /dev/null; then \
+		sudo sed -i '$$a 127.0.0.1\t$(DOMAIN_NAME)' /etc/hosts;\
 	fi
 
 create_volumes:
