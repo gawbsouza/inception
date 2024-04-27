@@ -1,9 +1,5 @@
 #!/bin/bash
 
-echo
-echo "*** START DATABASE CONFIGURATION ***"
-echo
-
 service mariadb start
 
 until [ -e /run/mysqld/mysqld.sock ]
@@ -24,9 +20,5 @@ mariadb -u root -e "GRANT ALL PRIVILEGES ON ${DATABASE_NAME}.* TO '${DATABASE_US
 mariadb -u root -e "FLUSH PRIVILEGES;"
 
 service mariadb stop
-
-echo
-echo "*** END DATABASE CONFIGURATION ***"
-echo
 
 exec "$@"

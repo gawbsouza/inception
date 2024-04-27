@@ -18,6 +18,11 @@ services:
     build: requirements/nginx
     ports:
       - "443:443"
+    env_file:
+      - .env
+    environment:
+      - SSL_CERTIFICATE
+      - SSL_PRIVATE_KEY
     networks:
       - app-network
     volumes:
